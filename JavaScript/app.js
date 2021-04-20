@@ -7,7 +7,13 @@ let maxAttempts = 10;
 let leftIndex;
 let centerIndex; 
 let rightIndex;
-
+let arrayOfName=[]
+let arrayOfVote=[]
+let arrayOfShow=[]
+let x=[null]
+let y=[null]
+let z=[null]
+let v=0
 Bus.allImages =[];
 
 function Bus(name,source){
@@ -16,6 +22,8 @@ function Bus(name,source){
   this.time=0;
   this.votes = 0;
   Bus.allImages.push(this);
+  arrayOfName.push(this.name)
+
   
 }
 new Bus('bag','../image/bag.jpg');
@@ -46,11 +54,19 @@ function renderThreeImages(){
     leftIndex = genrateRandomIndex(); 
     centerIndex = genrateRandomIndex(); 
     rightIndex = genrateRandomIndex();  
-    while(leftIndex === rightIndex ||centerIndex === rightIndex||leftIndex === centerIndex){
+    while(leftIndex === rightIndex ||centerIndex === rightIndex||leftIndex === centerIndex 
+      ||leftIndex===x[v]||leftIndex===y[v]||leftIndex===z[v]
+      ||centerIndex===x[v]||centerIndex===y[v]||centerIndex===z[v]
+      ||rightIndex===x[v]||rightIndex===y[v]||rightIndex===z[v]){
       leftIndex = genrateRandomIndex();
       centerIndex = genrateRandomIndex();
       rightIndex = genrateRandomIndex();
     }
+    v++
+    x.push(rightIndex)
+    y.push(centerIndex)
+    z.push(leftIndex)
+
     leftImageElement.src =  Bus.allImages[leftIndex].source;
     Bus.allImages[leftIndex].time++;
     centerImageElement.src =  Bus.allImages[centerIndex].source;
@@ -59,6 +75,7 @@ function renderThreeImages(){
     Bus.allImages[rightIndex].time++;
   }
   renderThreeImages();
+  console.log(x,y,z);
   
    container.addEventListener('click', handleClicking);
   // leftImageElement.addEventListener('click', handleClicking);
@@ -85,18 +102,56 @@ button.addEventListener('click', showingList);
 
 function showingList(){
   renderList()
+  chart()
   button.removeEventListener('click',showingList);
 }
 function renderList(){
       let ul = document.getElementById('unList');
     for(let i = 0 ; i < Bus.allImages.length;i++){
+      arrayOfVote.push(Bus.allImages[i].votes)
+      arrayOfShow.push(Bus.allImages[i].time) 
       let li = document.createElement('li');
       ul.appendChild(li);
       li.textContent = `${Bus.allImages[i].name} it has ${Bus.allImages[i].votes} Votes and show ${Bus.allImages[i].time} times`;
       
     }  
 }
-
+function chart(){
+  let ctx = document.getElementById('myChart');
+  let myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels:arrayOfName,
+          datasets: [{
+              label: '# of Votes',
+              data: arrayOfVote,
+              backgroundColor: [
+                'rgb(205,133,63)'
+                 
+              ],
+              borderColor: [
+                'rgba(0,0,0)',
+                  
+              ],
+              borderWidth: 1
+            },{
+              label: '# of show',
+              data: arrayOfShow,
+              backgroundColor: [
+                  'rgb(47,79,79)'
+                 
+              ],
+              borderColor: [
+                'rgba(0,0,0)',
+                  
+              ],
+              borderWidth: 1 
+          }]
+          
+      
+      }
+  });
+  }
 
 
 
