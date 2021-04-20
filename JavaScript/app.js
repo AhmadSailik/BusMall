@@ -10,12 +10,11 @@ let rightIndex;
 let arrayOfName=[]
 let arrayOfVote=[]
 let arrayOfShow=[]
-let arrOfRightIndex=[null]
-let arrOfCenterIndex=[null]
-let arrOfLeftIndex=[null]
+let arrOfRightIndex=[null]//lab 13 from 160 to 180
+let arrOfCenterIndex=[null]//lab 13 from 160 to 180
+let arrOfLeftIndex=[null]//lab 13 from 160 to 180
 let countOfRender=0
 Bus.allImages =[];
-
 function Bus(name,source){
   this.name= name;
   this.source = source;
@@ -23,7 +22,6 @@ function Bus(name,source){
   this.votes = 0;
   Bus.allImages.push(this);
   arrayOfName.push(this.name)
-
   
 }
 new Bus('bag','../image/bag.jpg');
@@ -91,7 +89,9 @@ function handleClicking(event){
       }else if (event.target.id ==='right-image'){
       Bus.allImages[rightIndex].votes++;
     }
+    saveToLocal()
     renderThreeImages();
+    
   }
  
 }
@@ -105,6 +105,7 @@ function showingList(){
   chart()
   button.removeEventListener('click',showingList);
 }
+
 function renderList(){
       let ul = document.getElementById('unList');
     for(let i = 0 ; i < Bus.allImages.length;i++){
@@ -113,9 +114,11 @@ function renderList(){
       let li = document.createElement('li');
       ul.appendChild(li);
       li.textContent = `${Bus.allImages[i].name} it has ${Bus.allImages[i].votes} Votes and show ${Bus.allImages[i].time} times`;
-      
+     
     }  
 }
+
+
 function chart(){
   let ctx = document.getElementById('myChart');
   let myChart = new Chart(ctx, {
@@ -152,12 +155,29 @@ function chart(){
       }
   });
   }
+  
+  
+  function saveToLocal(){
+    console.log(Bus.allImages);
+    let local = JSON.stringify(Bus.allImages);
+    localStorage.setItem('voiting', local);
 
+}
 
+function getFromLocal(){
 
+    let data =localStorage.getItem('voiting');
+    let local  = JSON.parse(data);
+    
 
+    if(local !== null){
+      Bus.allImages= local;
+    showingList();
 
-
+    }
+}
+getFromLocal()
+console.log(local);
 
 
 
