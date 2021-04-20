@@ -10,10 +10,10 @@ let rightIndex;
 let arrayOfName=[]
 let arrayOfVote=[]
 let arrayOfShow=[]
-let x=[null]
-let y=[null]
-let z=[null]
-let v=0
+let arrOfRightIndex=[null]
+let arrOfCenterIndex=[null]
+let arrOfLeftIndex=[null]
+let countOfRender=0
 Bus.allImages =[];
 
 function Bus(name,source){
@@ -55,17 +55,17 @@ function renderThreeImages(){
     centerIndex = genrateRandomIndex(); 
     rightIndex = genrateRandomIndex();  
     while(leftIndex === rightIndex ||centerIndex === rightIndex||leftIndex === centerIndex 
-      ||leftIndex===x[v]||leftIndex===y[v]||leftIndex===z[v]
-      ||centerIndex===x[v]||centerIndex===y[v]||centerIndex===z[v]
-      ||rightIndex===x[v]||rightIndex===y[v]||rightIndex===z[v]){
+      ||leftIndex===arrOfRightIndex[countOfRender]||leftIndex===arrOfCenterIndex[countOfRender]||leftIndex===arrOfLeftIndex[countOfRender]
+      ||centerIndex===arrOfRightIndex[countOfRender]||centerIndex===arrOfCenterIndex[countOfRender]||centerIndex===arrOfLeftIndex[countOfRender]
+      ||rightIndex===arrOfRightIndex[countOfRender]||rightIndex===arrOfCenterIndex[countOfRender]||rightIndex===arrOfLeftIndex[countOfRender]){
       leftIndex = genrateRandomIndex();
       centerIndex = genrateRandomIndex();
       rightIndex = genrateRandomIndex();
     }
-    v++
-    x.push(rightIndex)
-    y.push(centerIndex)
-    z.push(leftIndex)
+    countOfRender++
+    arrOfRightIndex.push(rightIndex)
+    arrOfCenterIndex.push(centerIndex)
+    arrOfLeftIndex.push(leftIndex)
 
     leftImageElement.src =  Bus.allImages[leftIndex].source;
     Bus.allImages[leftIndex].time++;
@@ -75,7 +75,7 @@ function renderThreeImages(){
     Bus.allImages[rightIndex].time++;
   }
   renderThreeImages();
-  console.log(x,y,z);
+  console.log(arrOfRightIndex,arrOfCenterIndex,arrOfLeftIndex);
   
    container.addEventListener('click', handleClicking);
   // leftImageElement.addEventListener('click', handleClicking);
