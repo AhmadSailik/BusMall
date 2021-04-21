@@ -1,0 +1,38 @@
+*{
+    box-sizing: border-box;
+}
+
+h2{
+    text-align: center;
+    color: rgb(66, 62, 60);
+}
+body{
+    background-color: rgb(236, 192, 238);
+}
+
+
+#sec-one{
+    float: left;
+    width: 50%;
+}   
+#sec-two{
+    float: right;
+    width: 50%;
+    background-image: url(../image/list-bg.png);
+}
+img{
+    display: inline-block;
+    width: 40%;
+    height: 300px;
+}
+ul{
+    width: 80%;
+    
+}
+
+li{
+    font-size: 30px;
+    font-weight: bold;
+    list-style: none;
+    
+}
